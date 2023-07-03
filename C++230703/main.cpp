@@ -1,14 +1,24 @@
-//
-//  main.cpp
-//  C++230703
-//
-//  Created by 조영승 on 2023/07/03.
-//
+#include<iostream>
+#include<cstring>
+using namespace std;
 
-#include <iostream>
+int ToDecimal(string number, int B){
+    int deci = 0;
+    int pos = 1;
+    for(int i = number.length()-1 ; i >= 0 ; i--){
+        if(number.at(i) >= 48 && number.at(i) <= 57)
+            deci+=(char(number.at(i))-48)*pos;
+        else
+            deci+=(char(number.at(i))-55)*pos;
+        pos *= B;
+    }
+    return deci;
+}
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main(){
+    string number;
+    long long int B, pos;
+    cin>>number>>pos;
+    B = pos;
+    cout<<ToDecimal(number, B);
 }
