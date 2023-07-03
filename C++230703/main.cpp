@@ -2,17 +2,24 @@
 #include<cstring>
 using namespace std;
 
-int ToDecimal(string number, int B){
-    int deci = 0;
-    int pos = 1;
-    for(int i = number.length()-1 ; i >= 0 ; i--){
-        if(number.at(i) >= 48 && number.at(i) <= 57)
-            deci+=(char(number.at(i))-48)*pos;
-        else
-            deci+=(char(number.at(i))-55)*pos;
-        pos *= B;
+int ToDecimal(string number, long long int B, long long int pos){
+    if(number.length() == 1)
+        if(number.at(0) >= 48 && number.at(0) <= 57){
+            return (char(number.at(0)) - 48)*(B/pos);
+        }
+        else{
+            return (char(number.at(0)) - 55)*(B/pos);
+        }
+    else{
+        string temp = number;
+        temp.pop_back();
+        if(number.at(number.length()-1) >= 48 && number.at(number.length()-1) <= 57){
+            return ((char(number.at(number.length()-1)) - 48)*(B/pos)) + ToDecimal(temp, B*pos, pos);
+        }
+        else{
+            return ((char(number.at(number.length()-1)) - 55)*(B/pos)) + ToDecimal(temp, B*pos, pos);
+        }
     }
-    return deci;
 }
 
 int main(){
@@ -20,5 +27,6 @@ int main(){
     long long int B, pos;
     cin>>number>>pos;
     B = pos;
-    cout<<ToDecimal(number, B);
+    cout<<ToDecimal(number, B, pos);
 }
+
